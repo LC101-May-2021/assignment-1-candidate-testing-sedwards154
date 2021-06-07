@@ -1,4 +1,4 @@
-const input = require("readline-sync");
+const input = require('readline-sync');
 
 let candidateName = "";
 
