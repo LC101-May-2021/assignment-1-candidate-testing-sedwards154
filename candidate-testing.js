@@ -1,86 +1,70 @@
-const input = require('readline-sync');
+const input = require("readline-sync");
 
-// TODO 2: modify your quiz app to ask 5 questions //
+let candidateName = "";
 
-// TODO 1.1a: Define candidateName // 
-let question ="Who was the first American woman in space?"
-let correctAnswer = "Sally Ride".toLowerCase()
-let candidateName = ""
-// TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
-//let questions = ["Who was the first American woman in space?", 
-//"True or false: 5 kilometer == 5000 meters?",
-//"(5 + 3)/2 * 10 = ?",
-//"Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2?",
-//"What is the minimum crew size for the ISS?"]
-//let correctAnswers= [
-//"Sally Ride",
-//"true",
-//"40",
-//"Trajectory",
-//"3"
-//]
-let candidateAnswer = ""
-let questions;
-let correctAnswers;
-let candidateAnswers;
+let questions = [
+     "Who was the first American woman in space?",
+     "True or false: 5 kilometer == 5000 meters?",
+     "(5 + 3)/2 * 10 = ?",
+     "Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2?",
+     "What is the minimum crew size for the ISS?"
+];
 
-function askForName () {
+let correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "3"];
 
-candidateName = input.question ("Your name here:"); 
+let candidateAnswers = [];
 
-  // TODO 1.1b: Ask for candidate's name //
-
+// TODO 1.1b: Ask for candidate's name //
+function askForName() {
+     candidateName = input.question("Your name here: ");
 }
 
 function askQuestion() {
-  // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer 
-candidateAnswer = input.question(question)
-   //for (let q=0; q < questions.length-1;q++)
-   //candidateAnswers.push(input.question(questions[q]))
+     for (let q = 0; q < questions.length; q++) {
+         candidateAnswers.push(input.question(questions[q]));
+     }
 }
 
+function gradeQuiz(givenAnswers) {
+     let grade = 0;
+     let totalAnswers = correctAnswers.length;
+     let totalCorrect = 0;
+     
+     
+     //TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly 
+     
+     for (let answer = 0; answer < givenAnswers.length; answer++) {
+         console.log(`Your answer: ${givenAnswers[answer]} || Correct answer: ${correctAnswers[answer]}`);
+         if (givenAnswers[answer].toLowerCase() === correctAnswers[answer].toLowerCase()) {
+             totalCorrect++;
+         }
+     }
+     grade = (totalCorrect / totalAnswers) * 100;
 
+     if (grade >= 80) {
+         console.log(`You passed with a score of: ${grade}%`);
+     } else {
+         console.log(`You failed and have a score of: ${grade}%`);
+     }
 
-function gradeQuiz(candidateAnswers) 
- { 
-
-
-  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
-if (correctAnswer===candidateAnswer.toLowerCase()) {
-console.log ("correct!") 
-} else { 
-  console.log ("incorrect!")
-
+     return grade;
 }
-
-
-
-
-  let grade;
-  
-
-  return grade;
-}
+// TODO 1.1c: Ask for candidate's name //
+  //console.log ("Hello " + candidateName + "!")
 
 function runProgram() {
-  askForName();
-  // TODO 1.1c: Ask for candidate's name //
-  console.log ("Hello " + candidateName + "!")
-
-  askQuestion();
-  gradeQuiz(this.candidateAnswers);
+     askForName();
+     console.log("Hello " + candidateName + "!");
+     askQuestion();
+     gradeQuiz(this.candidateAnswers);
 }
-
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
 module.exports = {
-  candidateName: candidateName,
-  correctAnswers: correctAnswers,
-  correctAnswer: correctAnswer,
-  questions: questions,
-  question: question,
-  candidateAnswers: candidateAnswers,
-  candidateAnswer: candidateAnswer,
-  gradeQuiz: gradeQuiz,
-  runProgram: runProgram
+     candidateName: candidateName,
+     correctAnswers: correctAnswers,
+     questions: questions,
+     candidateAnswers: candidateAnswers,
+     gradeQuiz: gradeQuiz,
+     runProgram: runProgram
 };
